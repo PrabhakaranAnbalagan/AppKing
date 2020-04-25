@@ -11,8 +11,8 @@ const QuestionsList = () => {
   useEffect(() => {
     getQuestions().then((_questions) => setQuestions(_questions));
   }, []);
-  return questions.map((question) => (
-    <div key={question.QuestionId}>
+  return (
+    <div>
       <br />
       <div className="row mb-2">
         <nav className="col-md-10 text-right">
@@ -23,11 +23,13 @@ const QuestionsList = () => {
       </div>
       <br />
       <div className="row mb-2">
-        <QuestionCard {...question} />
-        <SideBar  />
+        {questions.map((question) => (
+          <QuestionCard key={question.QuestionId} {...question} />
+        ))}
+        <SideBar />
       </div>
     </div>
-  ));
+  );
 };
 
 export default QuestionsList;

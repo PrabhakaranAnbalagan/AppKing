@@ -11,6 +11,9 @@ class Nav extends Component {
               <Link to="/">Home</Link>
             </li>
             <li>
+              <Link to="/QuestionsList">All Questions</Link>
+            </li>
+            <li>
               <Link to="/GitHubCard">Git-Search</Link>
             </li>
             <li>

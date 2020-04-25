@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
-import Home from "./components/Common/Home";
+import Home from "./components/Questionnaire/Home";
 import Nav from "./components/Navigation/Nav";
 import StarMatch from "./components/Star-Game/StarMatch";
 import GitHubCard from "./components/Github-Card-Search/GitHubCard";
 import NotFoundPage from "./components/Common/NotFoundPage";
 import AboutPage from "./components/Common/AboutPage";
-import Footer from "./components/Common/Footer";
+//import Footer from "./components/Common/Footer";
+import QuestionsList from "./components/Questionnaire/QuestionsList";
+import QuestionDetails from "./components/Questionnaire/QuestionDetails";
 
 class App extends Component {
   render() {
@@ -15,12 +17,14 @@ class App extends Component {
         <Nav />
         <Switch>
           <Route path="/" exact component={Home} />
+          <Route path="/QuestionsList" component={QuestionsList}></Route>
+          <Route path="/QuestionDetails/:questionId" component={QuestionDetails}></Route>
           <Route path="/GitHubCard" component={GitHubCard}></Route>
           <Route path="/StarMatch" component={StarMatch}></Route>
           <Route path="/AboutPage" component={AboutPage} />
           <Route component={NotFoundPage} />
         </Switch>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     );
   }

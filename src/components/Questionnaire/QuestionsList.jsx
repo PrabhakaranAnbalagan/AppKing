@@ -23,9 +23,11 @@ const QuestionsList = () => {
       </div>
       <br />
       <div className="row mb-2">
-        {questions.map((question) => (
-          <QuestionCard key={question.QuestionId} {...question} />
-        ))}
+        <div className="container col-md-10">
+          {questions.map((question) => (
+            <QuestionCard key={question.QuestionId} {...question} />
+          ))}
+        </div>
         <SideBar />
       </div>
     </div>

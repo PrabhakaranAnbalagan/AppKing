@@ -13,7 +13,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container col-md-12">
       <div className="jumbotron p-3 p-md-5 text-white rounded">
         <h1 className="display-4 font-italic">Developer's Kingdom</h1>
         <p className="lead my-3">
@@ -33,9 +33,11 @@ const Home = () => {
       </div>
       <br />
       <div className="row mb-2">
-        {questions.slice(0, 10).map((question) => (
-          <QuestionCard key={question.QuestionId} {...question} />
-        ))}
+        <div className="container col-md-10">
+          {questions.slice(0, 10).map((question) => (
+            <QuestionCard key={question.QuestionId} {...question} />
+          ))}
+        </div>
         <SideBar />
       </div>
     </div>

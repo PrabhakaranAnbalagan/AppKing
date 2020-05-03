@@ -1,5 +1,5 @@
 import { handleResponse, handleError } from "./apiUtils";
-const baseUrl = "http://api.appking.online/api/questions/";
+const baseUrl = "http://api.appking.online/questions/";
 
 export function getQuestions() {
   return fetch(baseUrl).then(handleResponse).catch(handleError);
@@ -11,18 +11,27 @@ export function getQuestionById(questionId) {
     .catch(handleError);
 }
 
-// export function saveAuthor(author) {
-//   return fetch(baseUrl + (author.id || ""), {
-//     method: author.id ? "PUT" : "POST", // POST for create, PUT to update when id already exists.
-//     headers: { "content-type": "application/json" },
-//     body: JSON.stringify(author)
-//   })
-//     .then(handleResponse)
-//     .catch(handleError);
-// }
+export function saveQuestion(question) {
+  return fetch(baseUrl, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      Authorization: "Bearer " + sessionStorage.getItem("accessToken"),
+    },
+    body: JSON.stringify(question),
+  })
+    .then(handleResponse)
+    .catch(handleError);
+}
 
-// export function deleteAuthor(authorId) {
-//   return fetch(baseUrl + authorId, { method: "DELETE" })
-//     .then(handleResponse)
-//     .catch(handleError);
-// }
+export function deleteQuestion(questionId) {
+  return fetch(baseUrl + questionId, {
+    method: "DELETE",
+    headers: {
+      "content-type": "application/json",
+      Authorization: "Bearer " + sessionStorage.getItem("accessToken"),
+    },
+  })
+    .then(handleResponse)
+    .catch(handleError);
+}

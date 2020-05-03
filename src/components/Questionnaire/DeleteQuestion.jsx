@@ -2,19 +2,18 @@ import React from "react";
 import { Link } from "react-router-dom";
 import TextArea from "../Common/TextArea";
 
-const QuestionForm = (props) => {
-  const { QuestionDesc, QuestionCategory } = props.question;
+const DeleteQuestion = (props) => {
+  const { QuestionDesc } = props.question;
   return (
-    <form onSubmit={props.onSubmit}>
+    <form onSubmit={props.onDelete}>
       <div className="container col-md-6">
         <div className="card flex-md-row mb-4 box-shadow h-md-250">
-          <div className="card-body d-flex flex-column align-items-start">
-            <br />
+          <div className="card-body d-flex flex-column align-items-start">           
             <strong className="d-inline-block mb-2 text-primary">
-            Question:
+              Confirm to Delete the Question:
             </strong>
             <TextArea
-              disabled = {false}
+              disabled = {true}
               id="QuestionDesc"
               label="QuestionDesc"
               name="QuestionDesc"
@@ -22,27 +21,12 @@ const QuestionForm = (props) => {
               rows="10"
               onChange={props.onChange}
               value={QuestionDesc}
-              error={props.error.QuestionDesc}
-            />
-             <br />
-            <strong className="d-inline-block mb-2 text-primary">
-            Question Category:
-            </strong>
-            <TextArea
-              disabled = {false}
-              id="QuestionCategory"
-              label="QuestionCategory"
-              name="QuestionCategory"
-              cols="80"
-              rows="3"
-              onChange={props.onChange}
-              value={QuestionCategory}
-              error={props.error.QuestionCategory}
+              error={props.error}
             />
             <br />
             <div>
               <button type="submit" className="btn btn-primary">
-                Save
+                Delete
               </button>
               <Link
                 className="btn btn-link"
@@ -63,4 +47,4 @@ const QuestionForm = (props) => {
   );
 };
 
-export default QuestionForm;
+export default DeleteQuestion;

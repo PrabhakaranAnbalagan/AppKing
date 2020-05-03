@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { getAnswersByQuestion } from "../API/answerApi";
 import { Link } from "react-router-dom";
-import { confirmAlert } from "react-confirm-alert"; // Import
-import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
+//import DeletePopUp from '../Common/DeletePopUp'; // If needed Delete Popup
 import { toast } from "react-toastify";
-import { deleteAnswer } from "../API/answerApi";
 
 const QuestionDetails = (props) => {
   const {
@@ -12,7 +10,7 @@ const QuestionDetails = (props) => {
     QuestionCategory,
     QuestionDesc,
   } = props.location.state.question;
-  const question = props.location.state.question;
+  const { UserName } = props.auth;
   const [answers, setAnswers] = useState([]);
 
   useEffect(() => {
@@ -22,38 +20,18 @@ const QuestionDetails = (props) => {
     }
   }, [QuestionId]);
 
-  const submit = (answerId) => {
-    confirmAlert({
-      title: "Confirm to Delete",
-      message: "",
-      buttons: [
-        {
-          label: "Delete",
-          onClick: () => {
-            deleteAnswer(answerId).then(() => {
-              props.history.push({
-                pathname: "/QuestionsList",
-              });
-              toast.success("Answer Deleted.");
-            });
-          },
-        },
-        {
-          label: "Cancel",
-          onClick: () =>
-            props.history.push({
-              pathname: "/QuestionDetails",
-              state: {
-                question: { ...question },
-              },
-            }),
-        },
-      ],
-    });
+  const handleAuthorization = (event) => {
+    if (UserName === "") {
+      event.preventDefault();
+      toast.warn(`Log In to ${event.target.name} a Answer...`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
   };
 
   return (
     <>
+      <br />
       <nav className="col-md-12 text-left">
         <Link to="/QuestionsList" className="btn btn-primary">
           All Questions
@@ -76,33 +54,55 @@ const QuestionDetails = (props) => {
                 cols="100"
                 rows="6"
                 type="text"
-                className="rounded"
+                style={{ backgroundColor: "white" }}
+                className="form-control"
                 value={answer.AnswerDesc}
               />
               <Link
                 className="btn btn-link"
+                name="Edit"
+                onClick={handleAuthorization}
                 to={{
                   pathname: "/ManageAnswer",
                   state: {
                     question: { ...props.location.state.question },
                     answer: { ...answer },
+                    action: "Save",
                   },
                 }}
               >
                 Edit Answer
               </Link>
-              <button
+              <Link
                 className="btn btn-link"
-                onClick={() => submit(answer.AnswerId)}
+                name="Delete"
+                onClick={handleAuthorization}
+                to={{
+                  pathname: "/ManageAnswer",
+                  state: {
+                    question: { ...props.location.state.question },
+                    answer: { ...answer },
+                    action: "Delete",
+                  },
+                }}
               >
                 Delete Answer
-              </button>
+              </Link>
+              {/* <button
+                className="btn btn-link"
+                onClick={() => DeletePopUp(answer.AnswerId, props)}
+              >
+                Delete Answer
+              </button> */}
+              <hr />
             </div>
           ))}
           <br />
           <nav className="col-md-12 text-left">
             <Link
               className="btn btn-primary"
+              name="Add"
+              onClick={handleAuthorization}
               to={{
                 pathname: "/ManageAnswer",
                 state: {
@@ -111,6 +111,7 @@ const QuestionDetails = (props) => {
                     AnswerDesc: "",
                     QuestionId: QuestionId,
                   },
+                  action: "Save",
                 },
               }}
             >

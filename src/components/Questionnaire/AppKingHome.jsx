@@ -4,12 +4,30 @@ import { Link } from "react-router-dom";
 import QuestionCard from "./QuestionCard";
 import SideBar from "./SideBar";
 import { getQuestions } from "../API/questionApi";
+import { toast } from "react-toastify";
 
-const Home = () => {
+const Home = (props) => {
+  const { UserName } = props.auth;
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
-    getQuestions().then((_questions) => setQuestions(_questions));
+    getQuestions().then((response) => {
+      if (response.status !== 200) {
+        toast.error(
+          ` Error Details:              
+                      ${response.data}
+
+        `,
+          {
+            position: toast.POSITION.TOP_CENTER,
+          }
+        );
+      } else {
+        response.data.then((res) => {
+          setQuestions(res);
+        });
+      }
+    });
   }, []);
 
   return (
@@ -25,7 +43,11 @@ const Home = () => {
       </div>
       <br />
       <div className="row mb-2">
-        <nav className="col-md-10 text-right">
+        <nav className="col-md-7 text-left">
+          {(UserName !== "") ?<p className="lead my-3">Welcome, {UserName}</p> :
+          <p></p>}
+        </nav>
+        <nav className="col-md-3 text-right">
           <Link to="/QuestionsList" className="btn btn-primary">
             All Questions
           </Link>

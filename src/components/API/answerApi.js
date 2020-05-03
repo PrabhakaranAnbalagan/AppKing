@@ -1,13 +1,11 @@
 import { handleResponse, handleError } from "./apiUtils";
-const baseUrl = "http://api.appking.online/api/answers/";
+const baseUrl = "http://api.appking.online/answers/";
 
 export function getAnswersByQuestion(questionId) {
-  return fetch(baseUrl +  questionId)
+  return fetch(baseUrl + questionId)
     .then((response) => {
       if (!response.ok) throw new Error("Network response was not ok.");
       return response.json().then((answers) => {
-        if (answers.length === 0)
-          throw new Error("answers not found: " + questionId);
         return answers;
       });
     })
@@ -15,9 +13,12 @@ export function getAnswersByQuestion(questionId) {
 }
 
 export function saveAnswer(answer) {
-  return fetch(baseUrl , {
+  return fetch(baseUrl, {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers: {
+      "content-type": "application/json",
+      Authorization: "Bearer " + sessionStorage.getItem("accessToken"),
+    },
     body: JSON.stringify(answer),
   })
     .then(handleResponse)
@@ -25,8 +26,13 @@ export function saveAnswer(answer) {
 }
 
 export function deleteAnswer(answerId) {
-  debugger;
-  return fetch(baseUrl + answerId, { method: "DELETE" })
+  return fetch(baseUrl + answerId, {
+    method: "DELETE",
+    headers: {
+      "content-type": "application/json",
+      Authorization: "Bearer " + sessionStorage.getItem("accessToken"),
+    },
+  })
     .then(handleResponse)
     .catch(handleError);
 }

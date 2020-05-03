@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import AnswerForm from "./AnswerForm";
-import { saveAnswer} from "../API/answerApi";
+import { saveAnswer, deleteAnswer } from "../API/answerApi";
 import { toast } from "react-toastify";
+import DeleteAnswer from "./DeleteAnswer";
 
 const ManageAnswer = (props) => {
   const question = props.location.state.question;
   const [error, setError] = useState("");
   const [answer, setAnswer] = useState(props.location.state.answer);
+  const action = props.location.state.action;
+  //const { UserName, AccessToken } = props.auth;
 
   function handleChange({ target }) {
     setAnswer({
@@ -27,19 +30,37 @@ const ManageAnswer = (props) => {
   function handleSubmit(event) {
     event.preventDefault();
     if (!formIsValid()) return;
-      saveAnswer(answer).then(() => {
-        props.history.push({
-          pathname: "/QuestionDetails",
-          state: {
-            question: { ...question },
-          },
-        });
-        toast.success("Answer saved.");
+    saveAnswer(answer).then(() => {
+      props.history.push({
+        pathname: "/QuestionDetails",
+        state: {
+          question: { ...question },
+        },
       });
+      toast.success("Answer saved.", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    });
   }
 
-  return (
-    <>
+  function handleDelete(event) {
+    event.preventDefault();
+    deleteAnswer(answer.AnswerId).then(() => {
+      props.history.push({
+        pathname: "/QuestionDetails",
+        state: {
+          question: { ...question },
+        },
+      });
+      toast.success("Answer Deleted.", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    });
+  }
+
+
+  if (action === "Save") {
+    return (
       <AnswerForm
         error={error}
         question={question}
@@ -47,8 +68,18 @@ const ManageAnswer = (props) => {
         onChange={handleChange}
         onSubmit={handleSubmit}
       />
-    </>
-  );
+    );
+  } else {
+    return (
+      <DeleteAnswer
+        error={error}
+        question={question}
+        answer={answer}
+        onChange={handleChange}
+        onDelete={handleDelete}
+      />
+    );
+  }
 };
 
 export default ManageAnswer;

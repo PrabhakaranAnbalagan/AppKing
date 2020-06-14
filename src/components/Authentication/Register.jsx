@@ -1,15 +1,17 @@
 import React from "react";
 import "../Authentication/logIn.css";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import {
+  ErrorMessage,
+  SuccessMessage,
+  WarningMessage,
+} from "../Questionnaire/MessageService";
 import { registerUser } from "../API/registerApi";
 
 const Register = (props) => {
   function validatePassword(password, confirm_password) {
     if (password !== confirm_password) {
-      toast.warn("Passwords Don't Match", {
-        position: toast.POSITION.TOP_CENTER,
-      });
+      WarningMessage("Passwords Don't Match");
       return false;
     } else {
       return true;
@@ -31,19 +33,15 @@ const Register = (props) => {
       if (response.status !== 200) {
         const { ModelState } = JSON.parse(response.details);
         var resilt = Object.entries(ModelState).map(([key, val]) => val);
-        toast.error(` Error Details:              
+        ErrorMessage(` Error Details:              
                       ${resilt[0]}
 
-        `, {
-          position: toast.POSITION.TOP_CENTER,
-        });
+        `);
       } else {
         props.history.push("/LogIn");
-        toast.success(
+        SuccessMessage(
           `User ${user.email} Registed Successfully. Please Login with Registered User details`
-          , {
-            position: toast.POSITION.TOP_CENTER,
-          });
+        );
       }
     });
   };

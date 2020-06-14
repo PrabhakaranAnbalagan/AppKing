@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getAnswersByQuestion } from "../API/answerApi";
 import { Link } from "react-router-dom";
 //import DeletePopUp from '../Common/DeletePopUp'; // If needed Delete Popup
-import { toast } from "react-toastify";
+import { WarningMessage } from "../Questionnaire/MessageService";
 
 const QuestionDetails = (props) => {
   const {
@@ -23,9 +23,7 @@ const QuestionDetails = (props) => {
   const handleAuthorization = (event) => {
     if (UserName === "") {
       event.preventDefault();
-      toast.warn(`Log In to ${event.target.name} a Answer...`, {
-        position: toast.POSITION.TOP_CENTER,
-      });
+      WarningMessage(`Log In to ${event.target.name} a Answer...`);
     }
   };
 

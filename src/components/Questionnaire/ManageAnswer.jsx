@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AnswerForm from "./AnswerForm";
 import { saveAnswer, deleteAnswer } from "../API/answerApi";
-import { toast } from "react-toastify";
+import { SuccessMessage } from "../Questionnaire/MessageService";
 import DeleteAnswer from "./DeleteAnswer";
 
 const ManageAnswer = (props) => {
@@ -37,9 +37,7 @@ const ManageAnswer = (props) => {
           question: { ...question },
         },
       });
-      toast.success("Answer saved.", {
-        position: toast.POSITION.TOP_CENTER,
-      });
+      SuccessMessage("Answer saved.");
     });
   }
 
@@ -52,12 +50,9 @@ const ManageAnswer = (props) => {
           question: { ...question },
         },
       });
-      toast.success("Answer Deleted.", {
-        position: toast.POSITION.TOP_CENTER,
-      });
+      SuccessMessage("Answer Deleted.");
     });
   }
-
 
   if (action === "Save") {
     return (

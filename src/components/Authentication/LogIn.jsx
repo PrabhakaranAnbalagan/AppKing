@@ -1,8 +1,8 @@
 import React from "react";
 import "../Authentication/logIn.css";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
 import { logInUser } from "../API/LogInApi";
+import { ErrorMessage, SuccessMessage } from "../Questionnaire/MessageService";
 
 const LogIn = (props) => {
   const handleSubmit = (event) => {
@@ -12,21 +12,17 @@ const LogIn = (props) => {
     const user = `grant_type=password&username=${email}&password=${password}`;
     logInUser(user).then((response) => {
       if (response.status !== 200) {
-        toast.error(` Error Details:              
+        ErrorMessage(` Error Details:              
                       ${response.details}
 
-        `, {
-          position: toast.POSITION.TOP_CENTER,
-        });
+        `);
       } else {
         response.json().then((res) => {
-          sessionStorage.setItem('accessToken', res.access_token)
-          sessionStorage.setItem('userName', res.userName)
+          sessionStorage.setItem("accessToken", res.access_token);
+          sessionStorage.setItem("userName", res.userName);
           props.handleSuccessAuth();
           props.history.push("/");
-          toast.success(`User ${res.userName} Login Successfully`, {
-            position: toast.POSITION.TOP_CENTER,
-          });
+          SuccessMessage(`User ${res.userName} Login Successfully`);
         });
       }
     });
@@ -34,9 +30,7 @@ const LogIn = (props) => {
   return (
     <div className="text-center">
       <form className="form-signin" type="submit" onSubmit={handleSubmit}>
-        <h1 className="h3 mb-3 font-weight-normal">
-          Please Log In
-        </h1>
+        <h1 className="h3 mb-3 font-weight-normal">Please Log In</h1>
         <br />
         <label htmlFor="inputEmail" className="sr-only">
           Email address

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import { SuccessMessage } from "../Questionnaire/MessageService";
 
 const Nav = (props) => {
   const { UserName } = props.auth;
@@ -64,9 +64,7 @@ const Nav = (props) => {
                 className="nav-link"
                 to="/"
                 onClick={() => {
-                  toast.success("Log Out Successful", {
-                    position: toast.POSITION.TOP_CENTER,
-                  });
+                  SuccessMessage("Log Out Successful");
                   props.handleLogOut();
                 }}
               >

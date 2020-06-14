@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { saveQuestion } from "../API/questionApi";
-import { toast } from "react-toastify";
+import { SuccessMessage } from "../Questionnaire/MessageService";
 import QuestionForm from "./QuestionForm";
 
 const ManageQuestion = (props) => {
@@ -29,9 +29,7 @@ const ManageQuestion = (props) => {
     if (!formIsValid()) return;
     saveQuestion(question).then(() => {
       props.history.push("/QuestionsList");
-      toast.success("Question saved.", {
-        position: toast.POSITION.TOP_CENTER,
-      });
+      SuccessMessage("Question saved.");
     });
   }
 
@@ -44,9 +42,7 @@ const ManageQuestion = (props) => {
   //           question: { ...question },
   //         },
   //       });
-  //       toast.success("Question Deleted.", {
-  //         position: toast.POSITION.TOP_CENTER,
-  //       });
+  //       SuccessMessage("Question Deleted.");
   //     });
   //   }
 

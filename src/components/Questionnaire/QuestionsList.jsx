@@ -3,7 +3,7 @@ import QuestionCard from "./QuestionCard";
 import { getQuestions } from "../API/questionApi";
 import SideBar from "./SideBar";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import { ErrorMessage, WarningMessage } from "../Questionnaire/MessageService";
 
 const QuestionsList = (props) => {
   const { UserName } = props.auth;
@@ -12,12 +12,8 @@ const QuestionsList = (props) => {
   useEffect(() => {
     getQuestions().then((response) => {
       if (response.status !== 200) {
-        toast.error(` Error Details:              
-                      ${response.data}
-
-        `, {
-          position: toast.POSITION.TOP_CENTER,
-        });
+        ErrorMessage(` Error Details:              
+                      ${response.data}`);
       } else {
         response.data.then((res) => {
           setQuestions(res);
@@ -29,9 +25,7 @@ const QuestionsList = (props) => {
   const handleAuthorization = (event) => {
     if (UserName === "") {
       event.preventDefault();
-      toast.warn("Log In to Add a Question...", {
-        position: toast.POSITION.TOP_CENTER,
-      });
+      WarningMessage("Log In to Add a Question...");
     }
   };
   return (
@@ -46,7 +40,7 @@ const QuestionsList = (props) => {
                 question: {
                   QuestionDesc: "",
                   QuestionCategory: "",
-                }
+                },
               },
             }}
             onClick={handleAuthorization}

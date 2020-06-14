@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import QuestionCard from "./QuestionCard";
 import SideBar from "./SideBar";
 import { getQuestions } from "../API/questionApi";
-import { toast } from "react-toastify";
+import { ErrorMessage } from "../Questionnaire/MessageService";
 
 const Home = (props) => {
   const { UserName } = props.auth;
@@ -13,15 +13,11 @@ const Home = (props) => {
   useEffect(() => {
     getQuestions().then((response) => {
       if (response.status !== 200) {
-        toast.error(
+        ErrorMessage(
           ` Error Details:              
                       ${response.data}
 
-        `,
-          {
-            position: toast.POSITION.TOP_CENTER,
-          }
-        );
+        `);
       } else {
         response.data.then((res) => {
           setQuestions(res);

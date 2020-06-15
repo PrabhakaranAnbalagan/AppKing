@@ -5,6 +5,7 @@ import QuestionCard from "./QuestionCard";
 import SideBar from "./SideBar";
 import { getQuestions } from "../API/questionApi";
 import { ErrorMessage } from "../Questionnaire/MessageService";
+import OtherApps from "./OtherApps";
 
 const Home = (props) => {
   const { UserName } = props.auth;
@@ -17,7 +18,8 @@ const Home = (props) => {
           ` Error Details:              
                       ${response.data}
 
-        `);
+        `
+        );
       } else {
         response.data.then((res) => {
           setQuestions(res);
@@ -40,8 +42,11 @@ const Home = (props) => {
       <br />
       <div className="row mb-2">
         <nav className="col-md-7 text-left">
-          {(UserName !== "") ?<p className="lead my-3">Welcome, {UserName}</p> :
-          <p></p>}
+          {UserName !== "" ? (
+            <p className="lead my-3">Welcome, {UserName}</p>
+          ) : (
+            <p></p>
+          )}
         </nav>
         <nav className="col-md-3 text-right">
           <Link to="/QuestionsList" className="btn btn-primary">
@@ -56,7 +61,14 @@ const Home = (props) => {
             <QuestionCard key={question.QuestionId} {...question} />
           ))}
         </div>
-        <SideBar />
+        <div className="container col-md-2">
+          <div className="row mb-2">
+            <div className="container col-md-12">
+              <OtherApps />
+              <SideBar />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

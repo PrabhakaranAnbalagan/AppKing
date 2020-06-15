@@ -4,6 +4,7 @@ import { getQuestions } from "../API/questionApi";
 import SideBar from "./SideBar";
 import { Link } from "react-router-dom";
 import { ErrorMessage, WarningMessage } from "../Questionnaire/MessageService";
+import OtherApps from "./OtherApps";
 
 const QuestionsList = (props) => {
   const { UserName } = props.auth;
@@ -57,7 +58,14 @@ const QuestionsList = (props) => {
             <QuestionCard key={question.QuestionId} {...question} />
           ))}
         </div>
-        <SideBar />
+        <div className="container col-md-2">
+          <div className="row mb-2">
+            <div className="container col-md-12">
+              <OtherApps />
+              <SideBar />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

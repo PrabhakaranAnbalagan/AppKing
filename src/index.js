@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { HashRouter as Router, Route } from "react-router-dom";
 //import { HashRouter, Route } from 'react-router-dom'
 import "bootstrap/dist/css/bootstrap.css";
 //import $ from 'jquery';
